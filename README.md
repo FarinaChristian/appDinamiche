@@ -1,4 +1,4 @@
-Per installare (consiglio di creare un ambiente):
+#### Per installare (consiglio di creare un ambiente):
 
 python3 -m venv .venv
 
@@ -8,11 +8,11 @@ pip install django-cms
 
 pip install djangocms-rawhtml
 
-Per creare(non serve perchè già l'ho fatto):
+ #### Per creare(non serve perchè già l'ho fatto):
 
 djangocms mysite
 
-Per far partire:
+ #### Per far partire:
 
 cd mysite
 
