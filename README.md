@@ -1,4 +1,5 @@
 Per installare (consiglio di creare un ambiente):
+
 python3 -m venv .venv
 source .venv/bin/activate per windows .venv\Scripts\activate
 pip install django-cms
