@@ -9,5 +9,7 @@ Per creare(non serve perchè già l'ho fatto):
 djangocms mysite
 
 Per far partire:
+
+
 cd mysite
 python -m manage runserver
