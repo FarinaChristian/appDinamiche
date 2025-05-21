@@ -162,12 +162,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'it'
+LANGUAGE_CODE = 'en'
 
 LANGUAGES = [
-    # ("en", _("English")),
+    ("en", _("English")),
     # Add additional languages here
-    ("it", _("Italian")),
 ]
 
 TIME_ZONE = 'UTC'
@@ -202,7 +201,7 @@ SITE_ID = 1
 # https://docs.django-cms.org/en/release-5.0.x/reference/configuration.html#cms-templates
 
 CMS_TEMPLATES = (
-    ("mistra/base.html", _("Standard")),
+    ("base.html", _("Standard")),
 )
 
 # Enable permissions
