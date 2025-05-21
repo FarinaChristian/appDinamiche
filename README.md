@@ -1,19 +1,8 @@
-#### Per installare (consiglio di creare un ambiente):
+# Progetto MISTRA
 
-python3 -m venv .venv
+Progetto per il corso di Applicazioni Dinamiche, A.A. 2024/2025
 
-source .venv/bin/activate per windows .venv\Scripts\activate
-
-pip install django-cms
-
-pip install djangocms-rawhtml
-
- #### Per creare(non serve perchè già l'ho fatto):
-
-djangocms mysite
-
- #### Per far partire:
-
-cd mysite
-
-python -m manage runserver
+Autori:
+- Bragastini Enrico
+- Farina Christian
+- Furri Geremia
