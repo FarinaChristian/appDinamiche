@@ -201,7 +201,7 @@ SITE_ID = 1
 # https://docs.django-cms.org/en/release-5.0.x/reference/configuration.html#cms-templates
 
 CMS_TEMPLATES = (
-    ("base.html", _("Standard")),
+    ("mistra/base.html", _("Standard")),
 )
 
 # Enable permissions
