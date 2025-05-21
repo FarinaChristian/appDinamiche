@@ -1,12 +1,24 @@
+/* ==========================================================================
+   VARIABILI GLOBALI
+   ========================================================================== */
 :root {
     --ao-primary-blue: #3b5998;
     --ao-secondary-teal: #004c52;
     --ao-light-teal: #66a2ab;
+    --white: #fff;
+    --text-color-on-dark: rgba(255, 255, 255, 0.85); /* Leggermente più opaco per migliore leggibilità */
+    --text-color-on-dark-hover: rgba(255, 255, 255, 1);
+    --text-color-on-dark-active: var(--white);
+    --bg-hover-on-dark: rgba(255, 255, 255, 0.1);
+    --border-color-on-dark: rgba(255, 255, 255, 0.15);
 }
 
+/* ==========================================================================
+   STILI GENERALI DI LAYOUT E HEADER (Presi dal tuo CSS)
+   ========================================================================== */
 .header-custom {
     background-color: var(--ao-primary-blue);
-    color: white;
+    color: var(--white);
     padding-top: 1rem;
     padding-bottom: 1rem;
 }
@@ -24,26 +36,9 @@
     max-width: 50px;
 }
 
-.navbar-custom {
-    background-color: var(--ao-secondary-teal);
-}
-
-.navbar-custom .nav-link {
-    color: var(--ao-light-teal);
-    font-weight: 500;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
-
-.navbar-custom .nav-link.active,
-.navbar-custom .nav-link:hover {
-    color: white;
-    background-color: ;
-}
-
 .page-title-banner {
     background-color: var(--ao-secondary-teal);
-    color: white;
+    color: var(--white);
     padding: 2rem 0;
 }
 
@@ -54,42 +49,177 @@
     line-height: 1.8;
 }
 
-/* dropdown */
-
-/* Stili per la Navbar Custom (presumendo navbar-custom) */
-.navbar-custom .navbar-nav .nav-item {
-    justify-content: center;
-    align-items: center;
+/* ==========================================================================
+   NAVBAR CUSTOM (.navbar-custom)
+   ========================================================================== */
+.navbar-custom {
+    background-color: var(--ao-secondary-teal);
+    /* padding-top: 0.5rem; /* Opzionale, se serve più spazio verticale */
+    /* padding-bottom: 0.5rem; */
 }
 
+/* Stili generali per i link della navbar */
+.navbar-custom .navbar-nav .nav-link {
+    color: var(--text-color-on-dark);
+    font-weight: 500;
+    padding: 0.75rem 1rem; /* Padding verticale e orizzontale consistente */
+    border-radius: 0.25rem; /* Leggero arrotondamento per estetica */
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.navbar-custom .navbar-nav .nav-link:hover,
+.navbar-custom .navbar-nav .nav-link:focus {
+    color: var(--text-color-on-dark-hover);
+    background-color: var(--bg-hover-on-dark); /* Sfondo per hover/focus */
+}
+
+.navbar-custom .navbar-nav .nav-link.active {
+    color: var(--text-color-on-dark-active);
+    background-color: var(--ao-primary-blue); /* Sfondo per item attivo, o altro colore distintivo */
+}
+
+/* --- Stili specifici per NAV-ITEM CON DROPDOWN (nav-item-has-children) --- */
+
+/* Link principale (testo) dello split button */
 .navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main {
-    padding-right: 0.3rem;
-}
-
-/* Link del toggle (freccia) */
-.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-toggle {
-    padding-left: 0.3rem;
-    padding-right: 0.75rem;
-}
-
-.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main.dropdown-toggle::after {
-    display: none;
+    padding-right: 0.5rem; /* Spazio tra testo e freccia (su desktop) */
 }
 .navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main::after {
-    display: none;
+    display: none !important; /* Assicura che non ci sia la freccia di Bootstrap sul link testo */
 }
 
-.navbar-custom .navbar-nav .nav-item.dropdown .dropdown-menu {
-    margin-top: 0.125rem;
+/* Link toggle (freccia) dello split button */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-toggle {
+    padding-left: 0.5rem;  /* Spazio tra testo e freccia (su desktop) */
+    /* padding-right rimane quello di .nav-link generale */
+    margin-left: 0; /* Sovrascrive Bootstrap se aggiunge margine a .dropdown-toggle-split */
 }
 
-/* Freccia del toggle stesso colore del testo quando active */
-.navbar-dark.navbar-custom .navbar-nav .nav-item.active-parent-li .nav-link-toggle {
-    color: #fff;
+/* Freccia del toggle attiva quando il genitore o un figlio è attivo */
+.navbar-custom .navbar-nav .nav-item.active-parent-li .nav-link-toggle {
+    color: var(--text-color-on-dark-active); /* Stesso colore del testo attivo */
+    background-color: var(--ao-primary-blue); /* Stesso sfondo del testo attivo, se nav-link.active lo ha */
 }
 
-/* Per il dropdown-toggle-split, Bootstrap aggiunge un margine sinistro quando è in un btn-group */
-/* Potremmo doverlo azzerare se non è desiderato qui */
-.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-toggle-split {
-    margin-left: 0;
+/* Contenitore del Dropdown Menu (Desktop) */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu {
+    background-color: var(--ao-secondary-teal);
+    border: 1px solid var(--border-color-on-dark);
+    border-radius: 0.25rem;
+    margin-top: 0.125rem; /* Piccolo spazio */
+    padding: 0.5rem 0; /* Padding interno del menu */
+}
+
+/* Item del Dropdown Menu (Desktop) */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item {
+    color: var(--text-color-on-dark);
+    padding: 0.5rem 1rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+}
+
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item:hover,
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item:focus {
+    color: var(--text-color-on-dark-hover);
+    background-color: var(--bg-hover-on-dark);
+}
+
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item.active {
+    color: var(--text-color-on-dark-active);
+    background-color: var(--ao-primary-blue); /* O altro colore attivo */
+}
+
+/* Divider nel dropdown */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-divider {
+    border-top-color: var(--border-color-on-dark);
+}
+
+
+/* ==========================================================================
+   NAVBAR COLLASSATA (MOBILE - breakpoint < LG: 991.98px)
+   ========================================================================== */
+@media (max-width: 991.98px) {
+
+    .navbar-custom .navbar-nav .nav-item.text-center {
+        text-align: left !important; /* Allinea a sinistra il testo degli item */
+    }
+
+
+    /* --- NAV-ITEM CON DROPDOWN SU MOBILE --- */
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children {
+        display: flex !important;    /* TRASFORMA LI IN FLEX CONTAINER */
+        flex-wrap: wrap !important; /* PERMETTE AL SOTTOMENU DI ANDARE SOTTO */
+        align-items: center !important; /* ALLINEA TESTO E FRECCIA VERTICALMENTE */
+    }
+
+    /* Link principale (testo) su mobile */
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main {
+        flex-grow: 1; /* OCCUPA SPAZIO DISPONIBILE */
+        /* padding-right ereditato, ma può essere aggiustato se necessario */
+        /* Esempio: padding-right: 0.5rem; per dare più spazio alla freccia */
+    }
+
+    /* Link toggle (freccia) su mobile */
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-toggle {
+        flex-grow: 0; /* NON CRESCERE */
+        flex-shrink: 0; /* NON RESTRINGERTI */
+        /* padding-left ereditato, ma può essere aggiustato */
+        /* Esempio: padding-left: 0.5rem; */
+    }
+
+    /* Trasformazione del .dropdown-menu per il mobile */
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu {
+        position: static !important;
+        float: none !important;
+        width: 100% !important; /* Occupa tutta la larghezza del LI */
+        margin-top: 0 !important;
+        background-color: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        padding: 0.5rem 0 0.5rem 1.5rem; /* Padding sopra, sotto e indentazione sinistra per sottomenu */
+        border-radius: 0 !important;
+        /* 'display' è gestito da Bootstrap con la classe .show */
+    }
+
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu.show {
+        display: block !important; /* Assicura visibilità */
+    }
+
+    /* Item del dropdown su mobile */
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item {
+        padding: 0.5rem 1rem; /* Padding per gli item del sottomenu mobile */
+        color: var(--text-color-on-dark);
+        background-color: transparent;
+        border-radius: 0;
+    }
+
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item:hover,
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item:focus {
+        color: var(--text-color-on-dark-hover);
+        background-color: var(--bg-hover-on-dark);
+    }
+
+    .navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-menu .dropdown-item.active {
+        color: var(--text-color-on-dark-active);
+        background-color: transparent; /* O un colore di sfondo leggero per l'attivo mobile */
+        font-weight: bold;
+    }
+}
+
+/* ==========================================================================
+   STILI AGGIUNTIVI OPZIONALI (Focus, ecc.)
+   ========================================================================== */
+.navbar-custom .navbar-toggler {
+    border-color: var(--border-color-on-dark);
+}
+.navbar-custom .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.85%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Stili di focus visibili (importante per accessibilità) */
+.navbar-custom .nav-link:focus-visible,
+.navbar-custom .dropdown-item:focus-visible,
+.navbar-custom .navbar-toggler:focus-visible {
+    outline: 2px solid var(--ao-light-teal);
+    outline-offset: 2px;
+    box-shadow: none;
 }

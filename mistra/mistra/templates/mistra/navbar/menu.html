@@ -1,6 +1,6 @@
 {% load i18n menu_tags cache %}{% spaceless %}
     {% for child in children %}
-        <li class="nav-item text-center {% if child.children %} dropdown d-flex align-items-center nav-item-has-children {% endif %} {% if child.selected or child.ancestor %} active-parent-li {% endif %}">
+        <li class="nav-item text-center {% if child.children %} dropdown nav-item-has-children d-lg-flex align-items-lg-center {% endif %} {% if child.selected or child.ancestor %} active-parent-li {% endif %}">
             {% if child.children %}
                 {# Link principale alla pagina padre #}
                 <a class="nav-link nav-link-main {% if child.selected or child.ancestor %} active {% endif %}" href="{{ child.get_absolute_url }}">
