@@ -1,0 +1,95 @@
+:root {
+    --ao-primary-blue: #3b5998;
+    --ao-secondary-teal: #004c52;
+    --ao-light-teal: #66a2ab;
+}
+
+.header-custom {
+    background-color: var(--ao-primary-blue);
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header-custom .logo {
+    max-height: 60px;
+}
+
+.central-logo {
+    max-width: 100px;
+    margin-bottom: 1rem;
+}
+
+.side-logo {
+    max-width: 50px;
+}
+
+.navbar-custom {
+    background-color: var(--ao-secondary-teal);
+}
+
+.navbar-custom .nav-link {
+    color: var(--ao-light-teal);
+    font-weight: 500;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.navbar-custom .nav-link.active,
+.navbar-custom .nav-link:hover {
+    color: white;
+    background-color: ;
+}
+
+.page-title-banner {
+    background-color: var(--ao-secondary-teal);
+    color: white;
+    padding: 2rem 0;
+}
+
+.content-section {
+    padding: 3rem 0;
+}
+.content-section p {
+    line-height: 1.8;
+}
+
+/* dropdown */
+
+/* Stili per la Navbar Custom (presumendo navbar-custom) */
+.navbar-custom .navbar-nav .nav-item {
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main {
+    padding-right: 0.3rem;
+}
+
+/* Link del toggle (freccia) */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-toggle {
+    padding-left: 0.3rem;
+    padding-right: 0.75rem;
+}
+
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main.dropdown-toggle::after {
+    display: none;
+}
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .nav-link-main::after {
+    display: none;
+}
+
+.navbar-custom .navbar-nav .nav-item.dropdown .dropdown-menu {
+    margin-top: 0.125rem;
+}
+
+/* Freccia del toggle stesso colore del testo quando active */
+.navbar-dark.navbar-custom .navbar-nav .nav-item.active-parent-li .nav-link-toggle {
+    color: #fff;
+}
+
+/* Per il dropdown-toggle-split, Bootstrap aggiunge un margine sinistro quando è in un btn-group */
+/* Potremmo doverlo azzerare se non è desiderato qui */
+.navbar-custom .navbar-nav .nav-item.nav-item-has-children .dropdown-toggle-split {
+    margin-left: 0;
+}
