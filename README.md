@@ -6,3 +6,5 @@ Autori:
 - Bragastini Enrico
 - Farina Christian
 - Furri Geremia
+
+#TENIAMO QUI QUESTO BRANCH DI SCORTA. HA LA GRAFICA IDENTICA A QUELLO ORIGINALE.
