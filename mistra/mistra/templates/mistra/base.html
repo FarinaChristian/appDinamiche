@@ -18,6 +18,11 @@
 
     {% render_block "css" %}
     <style>
+        .navbar-nav a:focus {
+        outline: 2px dashed #FFD700;
+        outline-offset: 4px;
+        }
+        
         /* Migliora il contrasto dei strong */
         div[style*="text-align: left"] strong {
             color: #ffffff;
@@ -105,16 +110,21 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom" style="background-color: #2B6CA3";>
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">{% block menubar %}{% show_menu 0 100 1 100 'mistra/navbar/menu.html' %}{% endblock %}</ul>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom" style="background-color: #2B6CA3;" role="navigation" aria-label="Menu principale">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Mostra/nascondi menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                {% block menubar %}
+                    {% show_menu 0 100 1 100 'mistra/navbar/menu.html' %}
+                {% endblock %}
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Contenuto Principale -->
     <main class="content-section">
@@ -139,6 +149,7 @@
     <!-- Bootstrap JS Bundle (include Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     {% render_block "js" %}
+ 
 </body>
 </html>
 
