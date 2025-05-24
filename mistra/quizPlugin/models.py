@@ -1,11 +1,13 @@
 from django.db import models
 
+
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class Question(models.Model):
     id = models.AutoField(primary_key=True)
@@ -16,16 +18,18 @@ class Question(models.Model):
     def __str__(self):
         return self.name
 
+
 class Answer(models.Model):
     id = models.AutoField(primary_key=True)
     text = models.TextField()
-    score = models.IntegerField()
+    score = models.IntegerField()       # da -1 a 1
     correction = models.TextField()
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
 
     def __str__(self):
         return self.text
-    
+
+
 class Test(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
@@ -37,12 +41,14 @@ class Test(models.Model):
     def __str__(self):
         return self.name
 
+
 class Sex(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
     def __str__(self):
         return self.name
+
 
 class TestExecution(models.Model):
     id = models.AutoField(primary_key=True)
@@ -54,7 +60,10 @@ class TestExecution(models.Model):
     ip = models.GenericIPAddressField()
     duration = models.DurationField()
     revision_date = models.DateTimeField(null=True, blank=True)
-    given_answer = models.ManyToManyField(Answer, related_name='test_executions')
     note = models.TextField()
-    
 
+
+class GivenAnswer(models.Model):
+    id = models.AutoField(primary_key=True)
+    test_execution = models.ForeignKey(TestExecution, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
