@@ -1,25 +1,12 @@
-{% load i18n menu_tags cache %}
+{% load static i18n menu_tags cache sekizai_tags %}
 
-<style>
-.nav-item.dropdown {
-    position: relative;
-}
+{% addtoblock "css" %}
+<link rel="stylesheet" href="{% static 'mistra/css/menu.css' %}">
+{% endaddtoblock %}
 
-.nav-item.dropdown:hover > .dropdown-menu {
-    display: block !important;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 0;
-    z-index: 1000;
-    min-width: 10rem;
-}
-
-.nav-link:hover {
-    background-color: #003449 !important;
-    color: white !important;
-}
-</style>
+{% addtoblock "js" %}
+<script src="{% static 'mistra/js/menu.js' %}"></script>
+{% endaddtoblock %}
 
 {% spaceless %}
     {% for child in children %}
@@ -29,13 +16,18 @@
             style="{% if child.selected or child.ancestor %}background-color: #003449;{% endif %}">
             
             {% if child.children %}
-                <a class="nav-link nav-link-main {% if child.selected or child.ancestor %} active{% endif %}" 
+                <a class="nav-link nav-link-main dropdown-toggle 
+                          {% if child.selected or child.ancestor %} active{% endif %}" 
                    href="{{ child.get_absolute_url }}" 
+                   role="button" 
+                   aria-haspopup="true" 
+                   aria-expanded="false"
+                   tabindex="0"
                    style="color: white; {% if child.selected or child.ancestor %}background-color: #003449;{% endif %}">
                     {{ child.get_menu_title }}
                 </a>
 
-                <div class="dropdown-menu" style="background-color: #003449;">
+                <div class="dropdown-menu">
                     {% show_menu from_level to_level extra_inactive extra_active "mistra/navbar/dropdown.html" "" "" child %}
                 </div>
             {% else %}

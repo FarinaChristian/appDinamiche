@@ -19,8 +19,8 @@
     {% render_block "css" %}
     <style>
         .navbar-nav a:focus {
-        outline: 2px dashed #FFD700;
-        outline-offset: 4px;
+        outline: 2px dashed #ff0000;
+        outline-offset: 1px;
         }
         
         /* Migliora il contrasto dei strong */
@@ -84,11 +84,11 @@
 
     <!-- Header con Loghi e Titolo Principale -->
     <div style="background-color: #2B6CA3; color: white; padding: 1% 0; font-weight: 400; font-size: 170%; letter-spacing: 1px;">
-    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; flex-wrap: wrap; min-height: 250px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; flex-wrap: wrap; min-height: 280px;">
 
         <!-- Stemma sinistro -->
         <img src="{% static 'mistra/img/logo_azienda_ospedaliera.png' %}" alt="Stemma SX"
-            style="position: absolute; left: 1%; top: 0; height: 80px; width: 80px; border-radius: 50%; object-fit: contain;">
+            style="position: absolute; left: 1%; top: 0; height: 70px; width: 70px; border-radius: 50%; object-fit: contain;">
 
         <!-- Logo centrale e testo -->
         <div style="display: flex; align-items: center; text-align: left; margin: 0 auto; padding: 0 110px;">
@@ -105,7 +105,7 @@
 
         <!-- Stemma destro -->
         <img src="{% static 'mistra/img/logo_univr_colori.png' %}" alt="Stemma DX"
-            style="position: absolute; right: 1%; top: 0; height: 80px; width: 80px; border-radius: 50%; object-fit: contain;">
+            style="position: absolute; right: 1%; top: 0; height: 70px; width: 70px; border-radius: 50%; object-fit: contain;">
     </div>
     </div>
 
