@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Category(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -10,7 +9,6 @@ class Category(models.Model):
 
 
 class Question(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     text = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='questions')
@@ -20,7 +18,6 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    id = models.AutoField(primary_key=True)
     text = models.TextField()
     score = models.IntegerField()       # da -1 a 1
     correction = models.TextField()
@@ -31,7 +28,6 @@ class Answer(models.Model):
 
 
 class Test(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
     min_score = models.IntegerField()
@@ -43,7 +39,6 @@ class Test(models.Model):
 
 
 class Sex(models.Model):
-    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
 
     def __str__(self):
@@ -51,7 +46,6 @@ class Sex(models.Model):
 
 
 class TestExecution(models.Model):
-    id = models.AutoField(primary_key=True)
     execution_time = models.DateTimeField(auto_now_add=True)
     age = models.IntegerField()
     sex = models.ForeignKey(Sex, related_name='test_executions', on_delete=models.CASCADE)
@@ -60,10 +54,18 @@ class TestExecution(models.Model):
     ip = models.GenericIPAddressField()
     duration = models.DurationField()
     revision_date = models.DateTimeField(null=True, blank=True)
+    given_answer = models.ManyToManyField(Answer, related_name='test_executions')
     note = models.TextField()
+    
+    class Meta:
+        ordering = ['-execution_time']
+        
+    def __str__(self):
+        return "{}: {} - score {}".format(self.ip, self.execution_time, self.score)
+    
+    
 
 
 class GivenAnswer(models.Model):
-    id = models.AutoField(primary_key=True)
     test_execution = models.ForeignKey(TestExecution, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
