@@ -275,7 +275,7 @@
         "fields": {
             "text": "Evitare solo i rapporti con persone sconosciute",
             "score": -1,
-            "correction": "Gravemente errato. Si possono contrarre MST anche da partner noti se infetti e non si usano precauzioni.",
+            "correction": "Gravemente errato. Si possono contrarre MST anche da partner noti se non si usano precauzioni.",
             "question": 5
         }
     },
@@ -522,6 +522,99 @@
             "score": -1,
             "correction": "Gravemente errato. La sifilide è una classica MST.",
             "question": 10
+        }
+    },
+    {
+        "model": "quizPlugin.sex",
+        "pk": 1,
+        "fields": {
+            "name": "Maschio"
+        }
+    },
+    {
+        "model": "quizPlugin.sex",
+        "pk": 2,
+        "fields": {
+            "name": "Femmina"
+        }
+    },
+    {
+        "model": "quizPlugin.sex",
+        "pk": 3,
+        "fields": {
+            "name": "Altro"
+        }
+    },
+    {
+        "model": "quizPlugin.test",
+        "pk": 1,
+        "fields": {
+            "name": "Test Base MST - Esempio",
+            "description": "Un test di esempio per valutare le conoscenze base sulle MST e la prevenzione.",
+            "min_score": 3,
+            "questions": [
+                1, 
+                2, 
+                3, 
+                5, 
+                7
+            ]
+        }
+    },
+    {
+        "model": "quizPlugin.testexecution",
+        "pk": 1,
+        "fields": {
+            "age": 28,
+            "ip": "192.0.2.15",
+            "execution_time": "2023-10-27T14:35:10Z",
+            "score": 2,
+            "duration": "00:12:45",
+            "revision_date": null,
+            "note": "Esecuzione di test iniziale per utente fittizio. Risposte miste.",
+            "sex": 1,
+            "test": 1,
+            "revision_code": "20231027-XYZ"
+        }
+    },
+    {
+        "model": "quizPlugin.givenanswer",
+        "pk": 1,
+        "fields": {
+            "test_execution": 1,
+            "answer": 1
+        }
+    },
+    {
+        "model": "quizPlugin.givenanswer",
+        "pk": 2,
+        "fields": {
+            "test_execution": 1,
+            "answer": 7 
+        }
+    },
+    {
+        "model": "quizPlugin.givenanswer",
+        "pk": 3,
+        "fields": {
+            "test_execution": 1,
+            "answer": 12
+        }
+    },
+    {
+        "model": "quizPlugin.givenanswer",
+        "pk": 4,
+        "fields": {
+            "test_execution": 1,
+            "answer": 17
+        }
+    },
+    {
+        "model": "quizPlugin.givenanswer",
+        "pk": 5,
+        "fields": {
+            "test_execution": 1,
+            "answer": 25
         }
     }
 ]
