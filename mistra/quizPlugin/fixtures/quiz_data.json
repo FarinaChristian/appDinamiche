@@ -1,0 +1,527 @@
+[
+    {
+        "model": "quizPlugin.category",
+        "pk": 1,
+        "fields": {
+            "name": "Conoscenze Generali sulle MST"
+        }
+    },
+    {
+        "model": "quizPlugin.category",
+        "pk": 2,
+        "fields": {
+            "name": "Diagnosi e Test"
+        }
+    },
+    {
+        "model": "quizPlugin.category",
+        "pk": 3,
+        "fields": {
+            "name": "Prevenzione"
+        }
+    },
+    {
+        "model": "quizPlugin.category",
+        "pk": 4,
+        "fields": {
+            "name": "Comunicazione e Supporto"
+        }
+    },
+    {
+        "model": "quizPlugin.category",
+        "pk": 5,
+        "fields": {
+            "name": "Specifiche sulle Infezioni"
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 1,
+        "fields": {
+            "name": "MST Batterica",
+            "text": "Quale tra le seguenti è una malattia sessualmente trasmissibile causata da un batterio?",
+            "category": 1
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 1,
+        "fields": {
+            "text": "Sifilide",
+            "score": 1,
+            "correction": "Corretto. La sifilide è causata dal batterio Treponema pallidum.",
+            "question": 1
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 2,
+        "fields": {
+            "text": "Herpes genitale",
+            "score": 0,
+            "correction": "Errato. L'herpes genitale è causato da un virus (HSV).",
+            "question": 1
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 3,
+        "fields": {
+            "text": "HPV (Papillomavirus umano)",
+            "score": 0,
+            "correction": "Errato. L'HPV è un virus.",
+            "question": 1
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 4,
+        "fields": {
+            "text": "Influenza stagionale",
+            "score": -1,
+            "correction": "Gravemente errato. L'influenza è una malattia respiratoria virale, non una MST batterica.",
+            "question": 1
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 2,
+        "fields": {
+            "name": "Affermazione Vera MST",
+            "text": "Quale di queste affermazioni è vera riguardo alle MST?",
+            "category": 1
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 5,
+        "fields": {
+            "text": "Possono essere asintomatiche, quindi è importante sottoporsi a test regolari",
+            "score": 1,
+            "correction": "Corretto. Molte MST non presentano sintomi evidenti nelle fasi iniziali.",
+            "question": 2
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 6,
+        "fields": {
+            "text": "Si manifestano sempre con sintomi evidenti",
+            "score": 0,
+            "correction": "Errato. Molte MST possono essere asintomatiche.",
+            "question": 2
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 7,
+        "fields": {
+            "text": "Colpiscono solo le persone con molti partner sessuali",
+            "score": 0,
+            "correction": "Errato. Chiunque sia sessualmente attivo può contrarre una MST.",
+            "question": 2
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 8,
+        "fields": {
+            "text": "Si trasmettono solo attraverso rapporti vaginali",
+            "score": -1,
+            "correction": "Gravemente errato. Le MST si possono trasmettere tramite rapporti vaginali, anali e orali, e talvolta per contatto pelle a pelle.",
+            "question": 2
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 3,
+        "fields": {
+            "name": "Periodo Finestra Test HIV",
+            "text": "Qual è il periodo finestra per il test HIV di quarta generazione?",
+            "category": 2
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 9,
+        "fields": {
+            "text": "Circa 2 settimane dopo l'esposizione",
+            "score": 1,
+            "correction": "Corretto. I test HIV di quarta generazione possono rilevare l'infezione (antigene p24) già dopo circa 15-20 giorni.",
+            "question": 3
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 10,
+        "fields": {
+            "text": "24 ore dopo l'esposizione",
+            "score": 0,
+            "correction": "Errato. È troppo presto per la maggior parte dei test.",
+            "question": 3
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 11,
+        "fields": {
+            "text": "6 mesi dopo l'esposizione",
+            "score": 0,
+            "correction": "Errato. Questo era vero per test di generazioni precedenti. I test moderni sono più rapidi.",
+            "question": 3
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 12,
+        "fields": {
+            "text": "Non è necessario fare il test se ci si sente bene",
+            "score": -1,
+            "correction": "Gravemente errato e pericoloso. L'HIV può essere asintomatico per anni. Il test è l'unico modo per saperlo.",
+            "question": 3
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 4,
+        "fields": {
+            "name": "Test HIV Gratuito Verona",
+            "text": "Dove è possibile effettuare il test HIV gratuitamente a Verona?",
+            "category": 2
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 13,
+        "fields": {
+            "text": "Presso il Centro MISTRA al Policlinico di Borgo Roma",
+            "score": 1,
+            "correction": "Corretto. Il Centro MISTRA offre test gratuiti e anonimi.",
+            "question": 4
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 14,
+        "fields": {
+            "text": "Solo presso cliniche private a pagamento",
+            "score": 0,
+            "correction": "Errato. Esistono centri pubblici che offrono test gratuiti.",
+            "question": 4
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 15,
+        "fields": {
+            "text": "In farmacia senza prescrizione",
+            "score": 0,
+            "correction": "Errato. Alcuni autotest HIV sono disponibili in farmacia, ma il test clinico gratuito è offerto in strutture dedicate.",
+            "question": 4
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 16,
+        "fields": {
+            "text": "Non è possibile fare il test HIV gratuitamente in Italia",
+            "score": -1,
+            "correction": "Gravemente errato. Il SSN offre test HIV gratuiti in molte strutture.",
+            "question": 4
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 5,
+        "fields": {
+            "name": "Metodo Prevenzione Efficace",
+            "text": "Qual è il metodo più efficace per prevenire la trasmissione delle MST durante i rapporti sessuali?",
+            "category": 3
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 17,
+        "fields": {
+            "text": "Utilizzo corretto del preservativo",
+            "score": 1,
+            "correction": "Corretto. Il preservativo, se usato correttamente e costantemente, è molto efficace.",
+            "question": 5
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 18,
+        "fields": {
+            "text": "Lavaggi genitali dopo il rapporto",
+            "score": 0,
+            "correction": "Errato. I lavaggi non prevengono le MST e possono anzi alterare la flora batterica.",
+            "question": 5
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 19,
+        "fields": {
+            "text": "Assunzione di antibiotici preventivi",
+            "score": 0,
+            "correction": "Errato. Gli antibiotici sono per trattare infezioni batteriche, non per prevenirle in questo modo (salvo casi specifici come la PrEP per l'HIV, che è antivirale).",
+            "question": 5
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 20,
+        "fields": {
+            "text": "Evitare solo i rapporti con persone sconosciute",
+            "score": -1,
+            "correction": "Gravemente errato. Si possono contrarre MST anche da partner noti se infetti e non si usano precauzioni.",
+            "question": 5
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 6,
+        "fields": {
+            "name": "MST e Sesso Orale",
+            "text": "È possibile contrarre una MST attraverso il sesso orale?",
+            "category": 3
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 21,
+        "fields": {
+            "text": "Sì, alcune MST possono trasmettersi anche attraverso il sesso orale",
+            "score": 1,
+            "correction": "Corretto. Gonorrea, sifilide, herpes, HPV possono trasmettersi oralmente.",
+            "question": 6
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 22,
+        "fields": {
+            "text": "No, il sesso orale è completamente sicuro",
+            "score": 0,
+            "correction": "Errato. Il sesso orale comporta rischi di trasmissione.",
+            "question": 6
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 23,
+        "fields": {
+            "text": "Solo se ci sono ferite visibili in bocca",
+            "score": 0,
+            "correction": "Errato. La trasmissione può avvenire anche in assenza di lesioni evidenti.",
+            "question": 6
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 24,
+        "fields": {
+            "text": "Solo le donne possono trasmettere MST durante il sesso orale",
+            "score": -1,
+            "correction": "Gravemente errato e fuorviante. La trasmissione può avvenire in entrambe le direzioni.",
+            "question": 6
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 7,
+        "fields": {
+            "name": "Comunicazione Partner MST",
+            "text": "Dopo una diagnosi di MST, cosa è consigliato fare riguardo ai partner sessuali recenti?",
+            "category": 4
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 25,
+        "fields": {
+            "text": "Informarli affinché possano sottoporsi a test e, se necessario, a trattamento",
+            "score": 1,
+            "correction": "Corretto. È un atto di responsabilità per la salute propria e altrui.",
+            "question": 7
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 26,
+        "fields": {
+            "text": "Non è necessario informarli se non si hanno sintomi",
+            "score": 0,
+            "correction": "Errato. Si può essere contagiosi anche senza sintomi.",
+            "question": 7
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 27,
+        "fields": {
+            "text": "Informarli solo se si è certi di averli contagiati",
+            "score": 0,
+            "correction": "Errato. È difficile essere certi, quindi è meglio informare per precauzione.",
+            "question": 7
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 28,
+        "fields": {
+            "text": "Evitare di informarli per non creare allarmismi inutili",
+            "score": -1,
+            "correction": "Gravemente errato. Non informare può portare a ulteriori contagi e complicazioni per i partner.",
+            "question": 7
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 8,
+        "fields": {
+            "name": "Supporto Psicologico MISTRA",
+            "text": "Il Centro MISTRA offre supporto psicologico per le persone con MST?",
+            "category": 4
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 29,
+        "fields": {
+            "text": "Sì, offre percorsi integrati tra diverse specialità mediche e competenze psicologiche",
+            "score": 1,
+            "correction": "Corretto. Il Centro MISTRA ha un approccio multidisciplinare.",
+            "question": 8
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 30,
+        "fields": {
+            "text": "No, si occupa solo di diagnosi e trattamento medico",
+            "score": 0,
+            "correction": "Errato. Offre anche supporto psicologico.",
+            "question": 8
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 31,
+        "fields": {
+            "text": "Solo per i pazienti con HIV",
+            "score": 0,
+            "correction": "Errato. Il supporto è disponibile per persone con diverse MST, non solo HIV.",
+            "question": 8
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 32,
+        "fields": {
+            "text": "Il supporto psicologico non è utile in caso di MST",
+            "score": -1,
+            "correction": "Gravemente errato. Ricevere una diagnosi di MST può avere un impatto emotivo significativo.",
+            "question": 8
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 9,
+        "fields": {
+            "name": "Agente Patogeno Gonorrea",
+            "text": "Quale agente patogeno causa la gonorrea?",
+            "category": 5
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 33,
+        "fields": {
+            "text": "Neisseria gonorrhoeae",
+            "score": 1,
+            "correction": "Corretto. Questo è il batterio responsabile della gonorrea.",
+            "question": 9
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 34,
+        "fields": {
+            "text": "Treponema pallidum",
+            "score": 0,
+            "correction": "Errato. Treponema pallidum causa la sifilide.",
+            "question": 9
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 35,
+        "fields": {
+            "text": "Virus dell'herpes simplex",
+            "score": 0,
+            "correction": "Errato. Questo virus causa l'herpes.",
+            "question": 9
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 36,
+        "fields": {
+            "text": "Virus dell'influenza",
+            "score": -1,
+            "correction": "Gravemente errato. Il virus dell'influenza causa l'influenza stagionale, non la gonorrea.",
+            "question": 9
+        }
+    },
+    {
+        "model": "quizPlugin.question",
+        "pk": 10,
+        "fields": {
+            "name": "Trasmissione Sifilide Sesso Orale",
+            "text": "La sifilide può essere trasmessa anche attraverso il sesso orale?",
+            "category": 5
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 37,
+        "fields": {
+            "text": "Sì, il contatto con le lesioni può trasmettere l'infezione",
+            "score": 1,
+            "correction": "Corretto. Le lesioni sifilitiche (sifilomi) sono altamente contagiose.",
+            "question": 10
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 38,
+        "fields": {
+            "text": "No, si trasmette solo attraverso rapporti vaginali",
+            "score": 0,
+            "correction": "Errato. La sifilide può essere trasmessa tramite qualsiasi contatto con le lesioni.",
+            "question": 10
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 39,
+        "fields": {
+            "text": "Solo se ci sono lesioni visibili",
+            "score": 0,
+            "correction": "Errato. Anche se le lesioni sono il principale veicolo, il rischio esiste. Inoltre, le lesioni possono essere interne e non visibili.",
+            "question": 10
+        }
+    },
+    {
+        "model": "quizPlugin.answer",
+        "pk": 40,
+        "fields": {
+            "text": "La sifilide non è una malattia sessualmente trasmissibile",
+            "score": -1,
+            "correction": "Gravemente errato. La sifilide è una classica MST.",
+            "question": 10
+        }
+    }
+]

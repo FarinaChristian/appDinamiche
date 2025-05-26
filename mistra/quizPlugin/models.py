@@ -29,7 +29,7 @@ class Answer(models.Model):
     text = models.TextField()
     
     class AnswerScore(models.IntegerChoices):
-        SEIOUS_ERROR = -1
+        SERIOUS_ERROR = -1
         ERROR = 0
         CORRECT = 1
     score = models.IntegerField(choices=AnswerScore)
