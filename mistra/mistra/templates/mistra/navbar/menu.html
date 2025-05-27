@@ -13,7 +13,7 @@
         <li class="nav-item text-center 
                    {% if child.children %} dropdown nav-item-has-children d-lg-flex align-items-lg-center {% endif %} 
                    {% if child.selected or child.ancestor %} active-parent-li {% endif %}" 
-            style="{% if child.selected or child.ancestor %}background-color: #003449;{% endif %}">
+            style="margin: 0 2px;{% if child.selected or child.ancestor %}background-color: #003449;{% endif %}">
             
             {% if child.children %}
                 <a class="nav-link nav-link-main dropdown-toggle 
