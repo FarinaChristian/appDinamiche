@@ -2,13 +2,13 @@ from django.contrib import admin
 from .models import *
 from django.utils.html import format_html
 
-admin.site.register(Category)
-admin.site.register(Question)
-admin.site.register(Answer)
-admin.site.register(Test)
-admin.site.register(Sex)
 admin.site.register(GivenAnswer)
 
+class AnswerInline(admin.TabularInline):
+    model = Answer
+    extra = 1
+    fields = ('text', 'score', 'correction')
+    
 class GivenAnswerInline(admin.TabularInline):
     model = GivenAnswer
     
@@ -66,7 +66,60 @@ class GivenAnswerInline(admin.TabularInline):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+@admin.register(Sex)
+class SexAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+
+@admin.register(Question)
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'category', 'text_preview')
+    list_filter = ('category',)
+    search_fields = ('name', 'text', 'category__name')
     
+    inlines = [AnswerInline]
+
+    def text_preview(self, obj):
+        return (obj.text[:75] + '...') if len(obj.text) > 75 else obj.text
+    text_preview.short_description = 'Anteprima Testo'
+    
+@admin.register(Test)
+class TestAdmin(admin.ModelAdmin):
+    list_display = ('name', 'description_preview', 'min_score')
+    search_fields = ('name', 'description')
+    
+    filter_horizontal = ('questions',)
+
+    def description_preview(self, obj):
+        return (obj.description[:75] + '...') if len(obj.description) > 75 else obj.description
+    description_preview.short_description = 'Anteprima Descrizione'    
+
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('text_preview', 'question_name', 'score', 'correction_preview')
+    list_filter = ('score', 'question__category')
+    search_fields = ('text', 'question__name', 'correction')
+    list_select_related = ('question', 'question__category')
+
+    def text_preview(self, obj):
+        return (obj.text[:75] + '...') if len(obj.text) > 75 else obj.text
+    text_preview.short_description = 'Anteprima Risposta'
+
+    def correction_preview(self, obj):
+        return (obj.correction[:75] + '...') if len(obj.correction) > 75 else obj.correction
+    correction_preview.short_description = 'Anteprima Correzione'
+
+    def question_name(self, obj):
+        return obj.question.name
+    question_name.short_description = 'Domanda'
+    question_name.admin_order_field = 'question__name'
 
 @admin.register(TestExecution)
 class TestExecutionAdmin(admin.ModelAdmin):
