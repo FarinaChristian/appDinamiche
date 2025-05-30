@@ -4,11 +4,13 @@ from django.utils.html import format_html
 
 admin.site.register(GivenAnswer)
 
+
 class AnswerInline(admin.TabularInline):
     model = Answer
     extra = 1
     fields = ('text', 'score', 'correction')
-    
+
+
 class GivenAnswerInline(admin.TabularInline):
     model = GivenAnswer
     
