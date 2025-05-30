@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Test Completato{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Hai completato il test!</h4>
+        <p class="mb-2">Punteggio totale: <strong>{{ execution.score }}</strong></p>
+        <p class="mb-2">Durata: <strong>{{ execution.duration }}</strong></p>
+        <hr>
+        <p class="mb-0">Codice di revisione: <code>{{ execution.revision_code }}</code></p>
+    </div>
+
+    <a href="{% url 'quiz-home' %}" class="btn btn-secondary mt-3">Torna alla Home</a>
+{% endblock %}

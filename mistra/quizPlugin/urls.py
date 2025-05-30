@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import *
+from . import views
 
 urlpatterns = [
-    path('', quiz_home, name='quiz_home'),
+    path('<int:test_id>/start/', views.start_test, name='quiz-question'),
+    path('<int:test_id>/submit/', views.submit_answer, name='quiz-submit'),
+    path('', views.home, name='quiz-home'),
 ]

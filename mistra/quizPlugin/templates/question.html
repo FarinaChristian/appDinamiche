@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Domanda {{ progress }}{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Domanda {{ progress }}</h5>
+            <p class="card-text"><strong>{{ question.text }}</strong></p>
+
+            <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}">
+                {% csrf_token %}
+
+                {% for answer in answers %}
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="answer" id="answer{{ answer.id }}" value="{{ answer.id }}" required>
+                        <label class="form-check-label" for="answer{{ answer.id }}">
+                            {{ answer.text }}
+                        </label>
+                    </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary mt-3">Avanti</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
