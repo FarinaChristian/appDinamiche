@@ -3,17 +3,63 @@
 {% block title %}Homepage Quiz{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Benvenuto nella sezione Quiz</h1>
+    <h1 class="mb-4">Benvenuto nella sezione Quiz, per continuare, inserire sesso ed età</h1>
+
+    <!-- Sezione con sesso ed età -->
+    <form id="user-info-form" class="mb-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <label for="sex" class="form-label">Sesso</label>
+                <select id="sex" class="form-select" required>
+                    <option value="">Seleziona...</option>
+                    <option value="maschio">Maschio</option>
+                    <option value="femmina">Femmina</option>
+                    <option value="altro">Altro</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="age" class="form-label">Età</label>
+                <input type="number" id="age" class="form-control" min="0" required>
+            </div>
+        </div>
+    </form>
 
     {% for test in tests %}
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">{{ test.name }}</h5>
                 <p class="card-text">{{ test.description }}</p>
-                <a href="{% url 'quiz-question' test.id %}" class="btn btn-primary">Inizia il Test</a>
+                <a href="{% url 'quiz-question' test.id %}" class="btn btn-primary start-test-btn disabled" tabindex="-1" aria-disabled="true">Inizia il Test</a>
             </div>
         </div>
     {% empty %}
         <p class="text-muted">Non ci sono test disponibili.</p>
     {% endfor %}
+
+    <script>
+        // Abilita il pulsante solo se entrambi i campi sono validi
+        const sexField = document.getElementById('sex');
+        const ageField = document.getElementById('age');
+        const buttons = document.querySelectorAll('.start-test-btn');
+
+        function validateForm() {
+            const sexValid = sexField.value.trim() !== '';
+            const ageValid = ageField.value.trim() !== '' && !isNaN(ageField.value) && Number(ageField.value) > 0;
+
+            buttons.forEach(btn => {
+                if (sexValid && ageValid) {
+                    btn.classList.remove('disabled');
+                    btn.setAttribute('aria-disabled', 'false');
+                    btn.removeAttribute('tabindex');
+                } else {
+                    btn.classList.add('disabled');
+                    btn.setAttribute('aria-disabled', 'true');
+                    btn.setAttribute('tabindex', '-1');
+                }
+            });
+        }
+
+        sexField.addEventListener('change', validateForm);
+        ageField.addEventListener('input', validateForm);
+    </script>
 {% endblock %}
