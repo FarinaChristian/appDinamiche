@@ -15,7 +15,6 @@ def start_test(request, test_id):
     question_list = list(test.questions.all())
     total_questions = len(question_list)
 
-    # inizializza l'esecuzione se non c'è già
     if 'execution_id' not in request.session:
         sex = Sex.objects.first()  # per semplicità
         execution = TestExecution.objects.create(
@@ -33,21 +32,21 @@ def start_test(request, test_id):
 
     index = request.session.get('question_index', 0)
 
-    # tutte le domande sono state risposte
     if index >= total_questions:
-        # calcola punteggio
         score = sum([ga.answer.score for ga in execution.given_answers_through.all()])
         execution.score = score
-
         execution.duration = timezone.now() - timezone.datetime.fromisoformat(request.session['start_time'])
-
         execution.save()
 
-        # reset sessione
+        given_answers = execution.given_answers_through.select_related('answer__question')
+
         for k in ['execution_id', 'question_index', 'start_time']:
             request.session.pop(k, None)
 
-        return render(request, 'test_completed.html', {'execution': execution})
+        return render(request, 'test_completed.html', {
+            'execution': execution,
+            'given_answers': given_answers,
+        })
 
     current_question = question_list[index]
     context = {

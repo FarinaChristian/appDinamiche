@@ -12,9 +12,20 @@
     </div>
 
     <div>
-        <h4 class="alert-heading">Ecco le risposte data</h4>
-        <p>Qui bisogna mettere tutta la storia della revisione e il resto</p>	
+        <h4 class="alert-heading mt-4">Le tue risposte</h4>
+        <ul class="list-group">
+            {% for ga in given_answers %}
+                <li class="list-group-item mb-2">
+                    <p><strong>Domanda:</strong> {{ ga.answer.question.text }}</p>
+                    <p><strong>Risposta data:</strong> {{ ga.answer.text }}</p>
+                    
+                    {% if ga.answer.score != 1 %}
+                        <p><strong>Commento:</strong> {{ ga.answer.correction }}</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
-    <a href="{% url 'quiz-home' %}" class="btn btn-secondary mt-3">Torna alla Home</a>
+    <a href="{% url 'quiz-home' %}" class="btn btn-secondary mt-4">Torna alla Home</a>
 {% endblock %}
