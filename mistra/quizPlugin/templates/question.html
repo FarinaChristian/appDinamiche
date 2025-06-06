@@ -3,6 +3,18 @@
 {% block title %}Domanda {{ progress }}{% endblock %}
 
 {% block content %}
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <h5 class="card-title">Execution debug info</h5>
+            <ul>
+                <li><strong>Sesso: </strong>{{ execution.sex }}</li>
+                <li><strong>Età: </strong>{{ execution.age }}</li>
+                <li><strong>IP Address: </strong>{{ execution.ip }}</li>
+            </ul>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Domanda {{ progress }}</h5>

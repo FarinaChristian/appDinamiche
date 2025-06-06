@@ -3,35 +3,42 @@
 {% block title %}Homepage Quiz{% endblock %}
 
 {% block content %}
-    <h1 class="mb-4">Benvenuto nella sezione Quiz, per continuare, inserire sesso ed età</h1>
+    <h1 class="mb-4">Benvenuto nella sezione Quiz</h1>
+
+    <h2 class="mb-3">Per continuare, inserire sesso ed età</h2>
 
     <!-- Sezione con sesso ed età -->
-    <form id="user-info-form" class="mb-4">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-4">
-                <label for="sex" class="form-label">Sesso</label>
-                <select id="sex" class="form-select" required>
-                    <option value="">Seleziona...</option>
-                    <option value="maschio">Maschio</option>
-                    <option value="femmina">Femmina</option>
-                    <option value="altro">Altro</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="age" class="form-label">Età</label>
-                <input type="number" id="age" class="form-control" min="0" required>
-            </div>
+    <div class="row my-5 g-3 align-items-center">
+        <div class="col-md-4">
+            <label for="sex" class="form-label">Sesso</label>
+            <select id="sex" class="form-select" required>
+                <option value="" disabled selected>Seleziona il sesso</option>
+                {% for s in sex %}
+                    <option value="{{ s }}">{{ s }}</option>
+                {% endfor %}
+            </select>
         </div>
-    </form>
+        <div class="col-md-4">
+            <label for="age" class="form-label">Età</label>
+            <input type="number" id="age" class="form-control" min="0" required>
+        </div>
+    </div>
 
     {% for test in tests %}
-        <div class="card mb-3">
-            <div class="card-body">
-                <h5 class="card-title">{{ test.name }}</h5>
-                <p class="card-text">{{ test.description }}</p>
-                <a href="{% url 'quiz-question' test.id %}" class="btn btn-primary start-test-btn disabled" tabindex="-1" aria-disabled="true">Inizia il Test</a>
+        <form method="post" action="{% url 'quiz-question' test.id %}" class="start-test-form">
+            {% csrf_token %}
+            <input type="hidden" name="sex">
+            <input type="hidden" name="age">
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ test.name }}</h5>
+                    <p class="card-text">{{ test.description }}</p>
+                    <button type="submit" class="btn btn-primary start-test-btn disabled">Inizia il Test</button>
+                </div>
             </div>
-        </div>
+        </form>
+
     {% empty %}
         <p class="text-muted">Non ci sono test disponibili.</p>
     {% endfor %}
@@ -61,5 +68,19 @@
 
         sexField.addEventListener('change', validateForm);
         ageField.addEventListener('input', validateForm);
+
+
+        // Aggiungi i valori di sesso ed età ai form quando vengono inviati
+        const forms = document.querySelectorAll('.start-test-form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                const sexValue = sexField.value;
+                const ageValue = ageField.value;
+
+                form.querySelector('input[name="sex"]').value = sexValue;
+                form.querySelector('input[name="age"]').value = ageValue;
+            });
+        });
+
     </script>
 {% endblock %}
