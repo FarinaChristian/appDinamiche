@@ -34,7 +34,8 @@
                         {% for answer in answers %}
                             <div class="col">
                                 <input type="radio" class="btn-check" name="answer" id="answer{{ answer.id }}"
-                                       value="{{ answer.id }}" required>
+                                       {% if selected_answer_id == answer.id %}checked{% endif %}
+                                       value="{{ answer.id }}">
                                 <label class="btn btn-outline-primary w-100 text-start py-3 px-4 rounded-3"
                                        for="answer{{ answer.id }}">
                                     {{ answer.text }}
@@ -43,39 +44,16 @@
                         {% endfor %}
                     </div>
 
-
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary px-4">Avanti</button>
+                    <div class="text-end d-flex justify-content-between">
+                        <button type="submit" name="action" value="back" class="btn btn-outline-secondary px-4">
+                            Indietro
+                        </button>
+                        <button type="submit" name="action" value="next" class="btn btn-primary px-4">Avanti</button>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
-
-
-    {#    <div class="card">#}
-    {#        <div class="card-body">#}
-    {#            <h5 class="card-title">Domanda {{ progress }}</h5>#}
-    {#            <p class="card-text"><strong>{{ question.text }}</strong></p>#}
-    {##}
-    {#            <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}">#}
-    {#                {% csrf_token %}#}
-    {##}
-    {#                {% for answer in answers %}#}
-    {#                    <div class="form-check mb-2">#}
-    {#                        <input class="form-check-input" type="radio" name="answer" id="answer{{ answer.id }}"#}
-    {#                               value="{{ answer.id }}" required>#}
-    {#                        <label class="form-check-label" for="answer{{ answer.id }}">#}
-    {#                            {{ answer.text }}#}
-    {#                        </label>#}
-    {#                    </div>#}
-    {#                {% endfor %}#}
-    {##}
-    {#                <button type="submit" class="btn btn-primary mt-3">Avanti</button>#}
-    {#            </form>#}
-    {#        </div>#}
-    {#    </div>#}
-
-
 
 {% endblock %}

@@ -45,6 +45,11 @@ def start_test(request, test_id):
 
     index = request.session.get('question_index', 0)
 
+    previous_answer = None
+    if index < total_questions:
+        current_question = question_list[index]
+        previous_answer = execution.given_answers_through.filter(answer__question=current_question).last()
+
     if index >= total_questions:
         score = sum([ga.answer.score for ga in execution.given_answers_through.all()])
         execution.score = score
@@ -64,6 +69,7 @@ def start_test(request, test_id):
         'answers': current_question.answers.all(),
         'progress': f"{index + 1} / {total_questions}",
         'execution': execution,
+        'selected_answer_id': previous_answer.answer.id if previous_answer else None,
     }
 
     return render(request, 'question.html', context)
@@ -84,9 +90,21 @@ def test_completed_view(request, revision_code):
 def submit_answer(request, test_id):
     if request.method == 'POST':
         execution = get_object_or_404(TestExecution, id=request.session.get('execution_id'))
-        answer_id = request.POST.get('answer')
-        answer = get_object_or_404(Answer, id=answer_id)
-        GivenAnswer.objects.create(test_execution=execution, answer=answer)
+        action = request.POST.get('action')
 
-        request.session['question_index'] += 1
+        if action == 'back':
+            if request.session['question_index'] > 0:
+                request.session['question_index'] -= 1
+        else:  # avanti
+            answer_id = request.POST.get('answer')
+            if answer_id:
+                answer = get_object_or_404(Answer, id=answer_id)
+                # Sovrascrivi risposta precedente, se esiste
+                GivenAnswer.objects.update_or_create(
+                    test_execution=execution,
+                    answer__question=answer.question,
+                    defaults={'answer': answer}
+                )
+                request.session['question_index'] += 1
+
         return redirect('quiz-question', test_id=test_id)
