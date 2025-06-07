@@ -63,6 +63,8 @@ def start_test(request, test_id):
 
         return redirect('quiz-completed', revision_code=execution.revision_code)
 
+    answered_question_ids = set(execution.given_answers_through.values_list('answer__question_id', flat=True))
+
     current_question = question_list[index]
     context = {
         'question': current_question,
@@ -70,6 +72,9 @@ def start_test(request, test_id):
         'progress': f"{index + 1} / {total_questions}",
         'execution': execution,
         'selected_answer_id': previous_answer.answer.id if previous_answer else None,
+        'answered_question_ids': answered_question_ids,
+        'question_list': question_list,
+        'current_index': index,
     }
 
     return render(request, 'question.html', context)
@@ -92,7 +97,11 @@ def submit_answer(request, test_id):
         execution = get_object_or_404(TestExecution, id=request.session.get('execution_id'))
         action = request.POST.get('action')
 
-        if action == 'back':
+        jump_to = request.POST.get('jump_to')
+
+        if jump_to and jump_to.isdigit():
+            request.session['question_index'] = int(jump_to)
+        elif action == 'back':
             if request.session['question_index'] > 0:
                 request.session['question_index'] -= 1
         else:  # avanti
