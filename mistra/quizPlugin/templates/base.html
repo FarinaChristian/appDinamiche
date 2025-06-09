@@ -1,0 +1,13 @@
+{% extends "mistra/base.html" %}  {# questo è il base del CMS #}
+
+{% block title %}Quiz | Centro MISTRA{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'quiz-home' %}">Quiz</a>
+        </div>
+    </nav>
+
+    {% block quiz_content %}{% endblock %}
+{% endblock %}

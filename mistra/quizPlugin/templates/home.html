@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Homepage Quiz{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Benvenuto nella sezione Quiz</h1>
+
+    {% if has_ongoing_execution %}
+        <!-- Modale di conferma per esecuzione in corso -->
+        <div class="modal fade" id="executionModal" tabindex="-1" aria-labelledby="executionModalLabel"
+             aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="executionModalLabel">Test Incompleto</h5>
+                    </div>
+                    <div class="modal-body">
+                        Hai già un test in corso. Vuoi riprendere da dove avevi lasciato o iniziare un nuovo test?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'quiz-question' request.session.execution_test_id %}" class="btn btn-primary">Riprendi</a>
+                        <form method="post" action="{% url 'quiz-home' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="reset_session" value="1">
+                            <button type="submit" class="btn btn-danger">Inizia nuovo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    <h2 class="mb-3">Per continuare, inserire sesso ed età</h2>
+
+    <!-- Sezione con sesso ed età -->
+    <div class="row my-5 g-3 align-items-center">
+        <div class="col-md-4">
+            <label for="sex" class="form-label">Sesso</label>
+            <select id="sex" class="form-select" required>
+                <option value="" disabled selected>Seleziona il sesso</option>
+                {% for s in sex %}
+                    <option value="{{ s }}">{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="age" class="form-label">Età</label>
+            <input type="number" id="age" class="form-control" min="0" required>
+        </div>
+    </div>
+
+    {% if test %}
+        <form method="post" action="{% url 'quiz-question' test.id %}" class="start-test-form">
+            {% csrf_token %}
+            <input type="hidden" name="sex">
+            <input type="hidden" name="age">
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{ test.name }}</h5>
+                    <p class="card-text text-muted mb-3">Numero di domande: {{ test.questions.count }}</p>
+
+                    <p class="card-text">{{ test.description }}</p>
+                    <button type="submit" class="btn btn-primary start-test-btn disabled">Inizia il Test</button>
+                </div>
+            </div>
+
+        </form>
+    {% else %}
+        <div class="alert alert-info" role="alert">Non ci sono test disponibili al momento.</div>
+    {% endif %}
+
+    {% if has_ongoing_execution %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = new bootstrap.Modal(document.getElementById('executionModal'));
+                modal.show();
+            });
+        </script>
+    {% endif %}
+
+    <script>
+        // Abilita il pulsante solo se entrambi i campi sono validi
+        const sexField = document.getElementById('sex');
+        const ageField = document.getElementById('age');
+        const buttons = document.querySelectorAll('.start-test-btn');
+
+        function validateForm() {
+            const sexValid = sexField.value.trim() !== '';
+            const ageValid = ageField.value.trim() !== '' && !isNaN(ageField.value) && Number(ageField.value) > 0;
+
+            buttons.forEach(btn => {
+                if (sexValid && ageValid) {
+                    btn.classList.remove('disabled');
+                    btn.setAttribute('aria-disabled', 'false');
+                    btn.removeAttribute('tabindex');
+                } else {
+                    btn.classList.add('disabled');
+                    btn.setAttribute('aria-disabled', 'true');
+                    btn.setAttribute('tabindex', '-1');
+                }
+            });
+        }
+
+        sexField.addEventListener('change', validateForm);
+        ageField.addEventListener('input', validateForm);
+
+
+        // Aggiungi i valori di sesso ed età ai form quando vengono inviati
+        const forms = document.querySelectorAll('.start-test-form');
+        forms.forEach(form => {
+            form.addEventListener('submit', function (event) {
+                const sexValue = sexField.value;
+                const ageValue = ageField.value;
+
+                form.querySelector('input[name="sex"]').value = sexValue;
+                form.querySelector('input[name="age"]').value = ageValue;
+            });
+        });
+
+    </script>
+{% endblock %}

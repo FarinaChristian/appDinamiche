@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Domanda {{ progress }}{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid mb-4">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="p-4 bg-light rounded-3 shadow-sm">
+                    <div class="row align-items-center">
+                        <div class="col-md-4 text-md-start text-center mb-3 mb-md-0">
+                            <h1 class="mb-2">📝 Test in corso</h1>
+                            <span class="badge bg-secondary fs-6">{{ execution.test.name }}</span>
+                        </div>
+                        <div class="col-md-8">
+                            <p class="mb-0 text-muted">{{ execution.test.description }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 my-4">
+                    <div class="card-header bg-white border-bottom-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="text-muted mb-0">Domanda {{ progress }}</h6>
+                            {#                            <h6 class="text-muted mb-0">Categoria: </h6>#}
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="fw-semibold mb-2">{{ question.text }}</h5>
+
+                        <span class="badge bg-secondary mb-3">{{ question.category.name }}</span>
+
+                        <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}" id="quiz-form">
+                            {% csrf_token %}
+
+                            <div class="row row-cols-1 g-3 mb-4">
+                                {% for answer in answers %}
+                                    <div class="col">
+                                        <input type="radio" class="btn-check" name="answer" id="answer{{ answer.id }}"
+                                               {% if selected_answer_id == answer.id %}checked{% endif %}
+                                               value="{{ answer.id }}">
+                                        <label class="btn btn-outline-primary w-100 text-start py-3 px-4 rounded-3"
+                                               for="answer{{ answer.id }}">
+                                            {{ answer.text }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+
+                            <div class="text-end d-flex justify-content-between">
+                                <button type="submit" name="action" value="back" class="btn btn-outline-secondary px-4">
+                                    <i class="fa fa-arrow-left me-2"></i>
+                                    Indietro
+                                </button>
+                                <button type="submit" name="action" value="next" class="btn btn-primary px-4">Salva risposta e prosegui
+                                    <i class="fa fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="sticky-top" style="top: 1rem;">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-white border-bottom-0">
+                            <h6 class="text-muted mb-0">Riepilogo risposte date</h6>
+                        </div>
+                        <div class="card-body d-flex flex-wrap gap-2">
+                            <form id="jumpForm" method="post"
+                                  action="{% url 'quiz-submit' test_id=execution.test.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="jump_to" id="jump_to">
+                                {% for q in question_list %}
+                                    {% with forloop.counter0 as i %}
+                                        <button type="button"
+                                                onclick="jumpToQuestion({{ i }})"
+                                                class="badge rounded-circle border-0 text-white {% if i == current_index %}bg-primary{% elif q.id in answered_question_ids %}bg-success{% else %}bg-danger{% endif %}"
+                                                style="width: 36px; height: 36px; line-height: 26px; font-size: 14px; text-align: center;">
+                                            {{ i|add:1 }}
+                                        </button>
+                                    {% endwith %}
+                                {% endfor %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function jumpToQuestion(index) {
+            document.getElementById('jump_to').value = index;
+            document.getElementById('jumpForm').submit();
+        }
+
+        // Disabilita il submit del form se non è selezionata nessuna risposta
+        document.getElementById('quiz-form').addEventListener('submit', function (event) {
+
+            if (event.submitter.name === 'action' && event.submitter.value === 'next') {
+                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                if (!selectedAnswer) {
+                    event.preventDefault();
+                    alert('Per favore, seleziona una risposta prima di procedere.');
+                }
+            }
+        });
+
+    </script>
+
+
+{% endblock %}
