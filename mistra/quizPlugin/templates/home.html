@@ -5,6 +5,32 @@
 {% block content %}
     <h1 class="mb-4">Benvenuto nella sezione Quiz</h1>
 
+    {% if has_ongoing_execution %}
+        <!-- Modale di conferma per esecuzione in corso -->
+        <div class="modal fade" id="executionModal" tabindex="-1" aria-labelledby="executionModalLabel"
+             aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="executionModalLabel">Test Incompleto</h5>
+                    </div>
+                    <div class="modal-body">
+                        Hai già un test in corso. Vuoi riprendere da dove avevi lasciato o iniziare un nuovo test?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{% url 'quiz-question' request.session.execution_test_id %}" class="btn btn-primary">Riprendi</a>
+                        <form method="post" action="{% url 'quiz-home' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="reset_session" value="1">
+                            <button type="submit" class="btn btn-danger">Inizia nuovo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
     <h2 class="mb-3">Per continuare, inserire sesso ed età</h2>
 
     <!-- Sezione con sesso ed età -->
@@ -42,6 +68,15 @@
     {% empty %}
         <p class="text-muted">Non ci sono test disponibili.</p>
     {% endfor %}
+
+    {% if has_ongoing_execution %}
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const modal = new bootstrap.Modal(document.getElementById('executionModal'));
+                modal.show();
+            });
+        </script>
+    {% endif %}
 
     <script>
         // Abilita il pulsante solo se entrambi i campi sono validi

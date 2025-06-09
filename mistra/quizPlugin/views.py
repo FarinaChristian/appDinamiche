@@ -5,12 +5,19 @@ from datetime import timedelta
 
 
 def home(request):
+    if request.method == 'POST' and request.POST.get('reset_session') == '1':
+        for key in ['execution_id', 'question_index', 'start_time', 'execution_test_id']:
+            request.session.pop(key, None)
+        return redirect('quiz-home')
+
     tests = Test.objects.all()
     sex = Sex.objects.all()
+    has_ongoing_execution = 'execution_id' in request.session
 
     context = {
         'tests': tests,
         'sex': sex,
+        'has_ongoing_execution': has_ongoing_execution,
     }
 
     return render(request, 'home.html', context)
@@ -22,6 +29,8 @@ def start_test(request, test_id):
 
     question_list = list(test.questions.all())
     total_questions = len(question_list)
+
+    request.session['execution_test_id'] = test.id
 
     if 'execution_id' not in request.session:
         # Se non esiste un'esecuzione del test nella sessione, creane una nuova
