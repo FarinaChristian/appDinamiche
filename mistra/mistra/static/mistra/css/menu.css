@@ -1,0 +1,29 @@
+.nav-item.dropdown {
+    position: relative;
+}
+
+.nav-item.dropdown > .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 0;
+    z-index: 1000;
+    min-width: 10rem;
+    background-color: #003449;
+}
+
+.nav-item.dropdown:hover > .dropdown-menu {
+    display: block !important;
+}
+
+.nav-link:hover {
+    background-color: #003449 !important;
+    color: white !important;
+}
+
+.active-parent-li .nav-link {
+    background-color: #003449 !important;
+    color: white !important;
+}
+

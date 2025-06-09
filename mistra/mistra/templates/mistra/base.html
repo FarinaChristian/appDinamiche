@@ -14,44 +14,117 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
     <!-- Il tuo CSS personalizzato -->
-    <link href="{% static 'mistra/css/main_style.css' %}" rel="stylesheet">
+    <!-- <link href="{% static 'mistra/css/main_style.css' %}" rel="stylesheet"> -->
 
     {% render_block "css" %}
+    <style>
+        .navbar-nav a:focus {
+        outline: 2px dashed #ff0000;
+        outline-offset: 0px;
+        }
+        
+        /* Migliora il contrasto dei strong */
+        div[style*="text-align: left"] strong {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            div[style*="max-width: 1200px"] {
+            flex-direction: column;
+            align-items: center !important;
+            position: relative;
+            padding: 20px 0;
+            min-height: auto;
+            }
+
+            /* Stemma sinistro e destro diventano in linea sopra il contenuto centrale */
+            img[alt="Stemma SX"], img[alt="Stemma DX"] {
+            position: static !important;
+            margin: 10px auto;
+            height: 40px !important;
+            width: 40px !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            }
+
+            /* Logo centrale e testo centrati e in colonna */
+            div[style*="display: flex; align-items: center; text-align: left;"] {
+            flex-direction: column !important;
+            text-align: center !important;
+            padding: 0 !important;
+            }
+
+            div[style*="display: flex; align-items: center; text-align: left;"] img {
+            margin: 0 0 15px 0 !important;
+            width: 180px !important;
+            height: 180px !important;
+            }
+
+            div[style*="display: flex; align-items: center; text-align: left;"] > div {
+            margin: 0;
+            }
+
+            h1 {
+            font-size: 1.8rem !important;
+            margin: 0.3rem 0 !important;
+            }
+
+            h2, h4, p {
+            font-size: 1.1rem !important;
+            margin: 0.1rem 0 !important;
+            }
+        }
+    </style>
 </head>
 <body>
     {% cms_toolbar %}
 
     <!-- Header con Loghi e Titolo Principale -->
-    <header class="header-custom">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-auto d-none d-lg-block">
-                    <img src="{% static 'mistra/img/logo_azienda_ospedaliera.png' %}" alt="Logo Azienda Ospedaliera" class="side-logo">
-                </div>
-                <div class="col text-center">
-                    <img src="{% static 'mistra/img/logo_mistra.png' %}" alt="Sexual Health Graphic" class="central-logo mx-auto d-block">
-                    <h1 class="display-5 fw-bold">CENTRO MISTRA</h1>
-                    <p class="lead mb-0">Centro Multidisciplinare Infezioni Sessualmente Trasmesse</p>
-                    <p class="small mt-1">Azienda Ospedaliera Universitaria Integrata di Verona</p>
-                </div>
-                <div class="col-auto d-none d-lg-block">
-                    <img src="{% static 'mistra/img/logo_univr_colori.png' %}" alt="Logo Università" class="side-logo">
-                </div>
-            </div>
+    <div style="background-color: #2B6CA3; color: white; padding: 1% 0; font-weight: 400; font-size: 170%; letter-spacing: 1px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative; flex-wrap: wrap; min-height: 280px;">
+
+        <!-- Stemma sinistro -->
+        <img src="{% static 'mistra/img/logo_azienda_ospedaliera.png' %}" alt="Stemma SX"
+            style="position: absolute; left: 1%; top: 0; height: 70px; width: 70px; border-radius: 50%; object-fit: contain;">
+
+        <!-- Logo centrale e testo -->
+        <div style="display: flex; align-items: center; text-align: left; margin: 0 auto; padding: 0 110px;">
+        <img src="{% static 'mistra/img/logo_mistra.png' %}" alt="Logo"
+            style="height: 245px; width: 245px; border-radius: 50%; object-fit: cover; margin-right: 20px;">
+        <div>
+            <p style="margin: 0;">Azienda Ospedaliera Universitaria Integrata di Verona</p>
+            <h1 style="margin: 5px 0;">CENTRO MISTRA</h1>
+            <h2 style="margin: 0;">Centro</h2>
+            <h2 style="margin: 0;font-weight: 320"><strong>M</strong>ultidisciplinare</h2>
+            <h3 style="margin: 0;font-weight: 320"><strong>I</strong>nfezioni <strong>S</strong>essualmente <strong>Tra</strong>smesse</h3>
         </div>
-    </header>
+        </div>
+
+        <!-- Stemma destro -->
+        <img src="{% static 'mistra/img/logo_univr_colori.png' %}" alt="Stemma DX"
+            style="position: absolute; right: 1%; top: 0; height: 70px; width: 70px; border-radius: 50%; object-fit: contain;">
+    </div>
+    </div>
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
-                <ul class="navbar-nav">{% block menubar %}{% show_menu 0 100 1 100 'mistra/navbar/menu.html' %}{% endblock %}</ul>
-            </div>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom" style="background-color: #2B6CA3;" role="navigation" aria-label="Menu principale">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Mostra/nascondi menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                {% block menubar %}
+                    {% show_menu 0 100 1 100 'mistra/navbar/menu.html' %}
+                {% endblock %}
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Contenuto Principale -->
     <main class="content-section">
@@ -66,7 +139,7 @@
         </div>
     </main>
 
-    <footer class="py-4 text-center bg-light">
+    <footer class="py-4 text-center bg-light" style="margin-top: 1%;">
         <div class="container">
             <p class="mb-0">© {% now "Y" %} Centro MISTRA. Tutti i diritti riservati.</p>
             <p class="small mb-0">Azienda Ospedaliera Universitaria Integrata di Verona</p>
@@ -76,5 +149,33 @@
     <!-- Bootstrap JS Bundle (include Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     {% render_block "js" %}
+ 
 </body>
 </html>
+
+<!--vecchio header
+      
+    <div style="background-color: #2B6CA3;color: white;padding: 1% 0%;font-weight: 400;font-size: 170%;letter-spacing: 1px;position: relative;">
+    <div style="max-width: 1200px;margin: 0 auto;display: flex;align-items: center;justify-content: center;padding: 0% 0%;position: relative;">
+     
+      <img src="{% static 'mistra\img\logo_azienda_ospedaliera.png' %}" alt="Stemma SX" style="left: 0;height: 7%;border-radius: 50%;width: 7%;object-fit: contain;margin-bottom: 17%;margin-top: -9%;">
+
+     
+      <div style="display: flex; align-items: center; text-align: left;margin-top: 2%">
+        <img src="{% static 'mistra\img\logo_mistra.png' %}" alt="Logo" style="height: 33%;width: 33%;border-radius: 50%;object-fit: cover;margin-right: 3%;">
+        <div style="margin-bottom: 8%;margin-left: -2%;">
+          <p style="margin-left: -20%;margin-top: -2%">Azienda Ospedaliera Universitaria Integrata di Verona</p>
+	        <br>
+          <h1 style="margin: 1% 0%;">CENTRO MISTRA</h1>
+	        <br>
+          <h2 style="margin: -1% 0%;">Centro</h2>
+	        <h3 style="margin: 1% 0%;font-weight: 320;"><strong>M</strong>ultidisciplinare</h2>
+          <h4 style="margin: 0;font-weight: 320"><strong>I</strong>nfezioni <strong>S</strong>essualmente <strong>Tras</strong>messe</h3>
+        </div>
+      </div>
+
+      
+      <img src="{% static 'mistra\img\logo_univr_colori.png' %}" alt="Stemma DX" style="right: 0;height: 10%;border-radius: 50%;width: 7%;object-fit: contain;margin-bottom: 17%;margin-top: -9%;">
+    </div>
+  </div>
+-->
