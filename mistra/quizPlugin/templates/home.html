@@ -50,7 +50,7 @@
         </div>
     </div>
 
-    {% for test in tests %}
+    {% if test %}
         <form method="post" action="{% url 'quiz-question' test.id %}" class="start-test-form">
             {% csrf_token %}
             <input type="hidden" name="sex">
@@ -59,15 +59,17 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ test.name }}</h5>
+                    <p class="card-text text-muted mb-3">Numero di domande: {{ test.questions.count }}</p>
+
                     <p class="card-text">{{ test.description }}</p>
                     <button type="submit" class="btn btn-primary start-test-btn disabled">Inizia il Test</button>
                 </div>
             </div>
-        </form>
 
-    {% empty %}
-        <p class="text-muted">Non ci sono test disponibili.</p>
-    {% endfor %}
+        </form>
+    {% else %}
+        <div class="alert alert-info" role="alert">Non ci sono test disponibili al momento.</div>
+    {% endif %}
 
     {% if has_ongoing_execution %}
         <script>

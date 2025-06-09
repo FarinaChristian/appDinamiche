@@ -23,13 +23,16 @@
                     <div class="card-header bg-white border-bottom-0">
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="text-muted mb-0">Domanda {{ progress }}</h6>
+                            {#                            <h6 class="text-muted mb-0">Categoria: </h6>#}
                         </div>
                     </div>
 
                     <div class="card-body">
-                        <h5 class="fw-semibold mb-4">{{ question.text }}</h5>
+                        <h5 class="fw-semibold mb-2">{{ question.text }}</h5>
 
-                        <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}">
+                        <span class="badge bg-secondary mb-3">{{ question.category.name }}</span>
+
+                        <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}" id="quiz-form">
                             {% csrf_token %}
 
                             <div class="row row-cols-1 g-3 mb-4">
@@ -48,9 +51,11 @@
 
                             <div class="text-end d-flex justify-content-between">
                                 <button type="submit" name="action" value="back" class="btn btn-outline-secondary px-4">
+                                    <i class="fa fa-arrow-left me-2"></i>
                                     Indietro
                                 </button>
-                                <button type="submit" name="action" value="next" class="btn btn-primary px-4">Avanti
+                                <button type="submit" name="action" value="next" class="btn btn-primary px-4">Salva risposta e prosegui
+                                    <i class="fa fa-arrow-right ms-2"></i>
                                 </button>
                             </div>
 
@@ -93,6 +98,19 @@
             document.getElementById('jump_to').value = index;
             document.getElementById('jumpForm').submit();
         }
+
+        // Disabilita il submit del form se non è selezionata nessuna risposta
+        document.getElementById('quiz-form').addEventListener('submit', function (event) {
+
+            if (event.submitter.name === 'action' && event.submitter.value === 'next') {
+                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                if (!selectedAnswer) {
+                    event.preventDefault();
+                    alert('Per favore, seleziona una risposta prima di procedere.');
+                }
+            }
+        });
+
     </script>
 
 

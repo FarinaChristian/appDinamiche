@@ -43,15 +43,16 @@ class GivenAnswerInline(admin.TabularInline):
 
     def formatted_score(self, obj):
         score_value = obj.answer_score_value
-        score_display = obj.answer_score_display
-        
+        if score_value is None:
+            return "-"
+
         color = "green"
-        if score_value == Answer.AnswerScore.ERROR:
+        if -0.5 < score_value < 0.5:
             color = "orange"
-        elif score_value == Answer.AnswerScore.SERIOUS_ERROR:
+        elif score_value <= -0.5:
             color = "red"
         
-        return format_html('<span style="color: {}; font-weight: bold;">{}</span>', color, score_display)
+        return format_html('<span style="color: {}; font-weight: bold;">{}</span>', color, score_value)
     
     formatted_score.short_description = "Punteggio Risposta"
     
@@ -61,7 +62,6 @@ class GivenAnswerInline(admin.TabularInline):
             return "-"
         return (text[:75] + '...') if len(text) > 75 else text
     answer_correction_display.short_description = "Correzione"
-
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -91,7 +91,8 @@ class QuestionAdmin(admin.ModelAdmin):
     def text_preview(self, obj):
         return (obj.text[:75] + '...') if len(obj.text) > 75 else obj.text
     text_preview.short_description = 'Anteprima Testo'
-    
+
+
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
     list_display = ('name', 'description_preview', 'min_score')
@@ -102,6 +103,7 @@ class TestAdmin(admin.ModelAdmin):
     def description_preview(self, obj):
         return (obj.description[:75] + '...') if len(obj.description) > 75 else obj.description
     description_preview.short_description = 'Anteprima Descrizione'    
+
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
@@ -122,6 +124,7 @@ class AnswerAdmin(admin.ModelAdmin):
         return obj.question.name
     question_name.short_description = 'Domanda'
     question_name.admin_order_field = 'question__name'
+
 
 @admin.register(TestExecution)
 class TestExecutionAdmin(admin.ModelAdmin):

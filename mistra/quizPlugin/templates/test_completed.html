@@ -22,7 +22,7 @@
                     <p><strong>Domanda:</strong> {{ ga.answer.question.text }}</p>
                     <p><strong>Risposta data:</strong> {{ ga.answer.text }}</p>
                     
-                    {% if ga.answer.score != 1 %}
+                    {% if ga.answer.score < 0.5 %}
                         <p><strong>Commento:</strong> {{ ga.answer.correction }}</p>
                     {% endif %}
                 </li>

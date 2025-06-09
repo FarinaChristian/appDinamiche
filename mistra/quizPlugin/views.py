@@ -3,6 +3,8 @@ from .models import Test, Question, Answer, TestExecution, GivenAnswer, Sex
 from django.utils import timezone
 from datetime import timedelta
 
+import random
+
 
 def home(request):
     if request.method == 'POST' and request.POST.get('reset_session') == '1':
@@ -10,12 +12,13 @@ def home(request):
             request.session.pop(key, None)
         return redirect('quiz-home')
 
-    tests = Test.objects.all()
+    tests_count = Test.objects.count()
+    test = Test.objects.all()[random.randint(0, tests_count - 1)] if tests_count > 0 else None
     sex = Sex.objects.all()
     has_ongoing_execution = 'execution_id' in request.session
 
     context = {
-        'tests': tests,
+        'test': test,
         'sex': sex,
         'has_ongoing_execution': has_ongoing_execution,
     }
@@ -60,12 +63,17 @@ def start_test(request, test_id):
         previous_answer = execution.given_answers_through.filter(answer__question=current_question).last()
 
     if index >= total_questions:
+        # se non tutte le domande sono state risposte, redireziona alla prima domanda non risposta
+        unanswered_questions = [q for q in question_list if not execution.given_answers_through.filter(answer__question=q).exists()]
+        if unanswered_questions:
+            first_unanswered_index = question_list.index(unanswered_questions[0])
+            request.session['question_index'] = first_unanswered_index
+            return redirect('quiz-question', test_id=test_id)
+
         score = sum([ga.answer.score for ga in execution.given_answers_through.all()])
-        execution.score = score
+        execution.score = round(score, 1)
         execution.duration = timezone.now() - timezone.datetime.fromisoformat(request.session['start_time'])
         execution.save()
-
-        given_answers = execution.given_answers_through.select_related('answer__question')
 
         for k in ['execution_id', 'question_index', 'start_time']:
             request.session.pop(k, None)
@@ -75,9 +83,14 @@ def start_test(request, test_id):
     answered_question_ids = set(execution.given_answers_through.values_list('answer__question_id', flat=True))
 
     current_question = question_list[index]
+
+    # answers in random order
+    answers = list(current_question.answers.all())
+    random.shuffle(answers)
+
     context = {
         'question': current_question,
-        'answers': current_question.answers.all(),
+        'answers': answers,
         'progress': f"{index + 1} / {total_questions}",
         'execution': execution,
         'selected_answer_id': previous_answer.answer.id if previous_answer else None,

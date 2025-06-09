@@ -25,17 +25,13 @@ class Question(models.Model):
         verbose_name_plural = "Domande"
 
     def __str__(self):
-        return "{} - {}".format(self.name, self.category.name) 
+        return "{} - {}".format(self.name, self.category.name)
 
 
 class Answer(models.Model):
     text = models.TextField()
-    
-    class AnswerScore(models.IntegerChoices):
-        SERIOUS_ERROR = -1, "Errore Grave"
-        ERROR = 0, "Errore"
-        CORRECT = 1, "Corretto"
-    score = models.IntegerField(choices=AnswerScore)
+
+    score = models.FloatField()
     
     correction = models.TextField()
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
@@ -47,11 +43,16 @@ class Answer(models.Model):
     def __str__(self):
         return self.text
 
+    def save(self, *args, **kwargs):
+        if self.score < -1 or self.score > 1:
+            raise ValueError("Il punteggio deve essere compreso tra -1 e 1.")
+        super().save(*args, **kwargs)
+
 
 class Test(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    min_score = models.IntegerField()
+    min_score = models.FloatField()
     
     questions = models.ManyToManyField(Question, related_name='tests')
     
@@ -78,7 +79,7 @@ class TestExecution(models.Model):
     age = models.IntegerField(verbose_name="Età utente")
     ip = models.GenericIPAddressField(verbose_name="Indirizzo IP utente")
     execution_time = models.DateTimeField(auto_now_add=True, verbose_name="Data d'esecuzione")
-    score = models.IntegerField(verbose_name="Punteggio", default=0)
+    score = models.FloatField(verbose_name="Punteggio", default=0)
     duration = models.DurationField(verbose_name="Durata")
     revision_date = models.DateTimeField(null=True, blank=True, verbose_name="Data di revisione")
     note = models.TextField(verbose_name="Note di revisione")
@@ -147,9 +148,9 @@ class GivenAnswer(models.Model):
     def answer_score_value(self):
         return self.answer.score
 
-    @property
-    def answer_score_display(self):
-        return self.answer.get_score_display()
+    # @property
+    # def answer_score_display(self):
+    #     return self.answer.get_score_display()
 
     @property
     def answer_correction(self):
