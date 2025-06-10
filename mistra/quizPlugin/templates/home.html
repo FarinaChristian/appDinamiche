@@ -3,6 +3,7 @@
 {% block title %}Homepage Quiz{% endblock %}
 
 {% block content %}
+    <br>
     <h1 class="mb-4">Benvenuto nella sezione Quiz</h1>
 
     {% if has_ongoing_execution %}
@@ -29,7 +30,6 @@
             </div>
         </div>
     {% endif %}
-
 
     <h2 class="mb-3">Per continuare, inserire sesso ed età</h2>
 
@@ -58,11 +58,21 @@
 
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">{{ test.name }}</h5>
+                    <h3 class="card-title">{{ test.name }}</h3>
                     <p class="card-text text-muted mb-3">Numero di domande: {{ test.questions.count }}</p>
-
                     <p class="card-text">{{ test.description }}</p>
-                    <button type="submit" class="btn btn-primary start-test-btn disabled">Inizia il Test</button>
+
+                    <!-- Pulsante accessibile -->
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary start-test-btn" 
+                        disabled 
+                        aria-disabled="true" 
+                        aria-label="Il pulsante Inizia il Test è disabilitato"
+                        style="background-color: #c8c8c8 !important; color: #212121 !important; cursor: not-allowed; opacity: 1 !important;"
+                    >
+                        Inizia il Test
+                    </button>
                 </div>
             </div>
 
@@ -93,19 +103,28 @@
             buttons.forEach(btn => {
                 if (sexValid && ageValid) {
                     btn.classList.remove('disabled');
+                    btn.removeAttribute('disabled');
                     btn.setAttribute('aria-disabled', 'false');
                     btn.removeAttribute('tabindex');
+                    btn.style.backgroundColor = '';
+                    btn.style.color = '';
+                    btn.style.cursor = '';
+                    btn.style.opacity = '';
                 } else {
                     btn.classList.add('disabled');
+                    btn.setAttribute('disabled', 'true');
                     btn.setAttribute('aria-disabled', 'true');
                     btn.setAttribute('tabindex', '-1');
+                    btn.style.backgroundColor = '#c8c8c8';
+                    btn.style.color = '#212121';
+                    btn.style.cursor = 'not-allowed';
+                    btn.style.opacity = '1';
                 }
             });
         }
 
         sexField.addEventListener('change', validateForm);
         ageField.addEventListener('input', validateForm);
-
 
         // Aggiungi i valori di sesso ed età ai form quando vengono inviati
         const forms = document.querySelectorAll('.start-test-form');
@@ -118,6 +137,5 @@
                 form.querySelector('input[name="age"]').value = ageValue;
             });
         });
-
     </script>
 {% endblock %}

@@ -4,17 +4,18 @@
 
 {% block content %}
 
+    <br>
     <div class="container-fluid mb-4">
         <div class="row">
             <div class="col-lg-9">
                 <div class="p-4 bg-light rounded-3 shadow-sm">
                     <div class="row align-items-center">
                         <div class="col-md-4 text-md-start text-center mb-3 mb-md-0">
-                            <h1 class="mb-2">📝 Test in corso</h1>
+                            <h3 class="mb-2">📝 Test in corso</h3>
                             <span class="badge bg-secondary fs-6">{{ execution.test.name }}</span>
                         </div>
                         <div class="col-md-8">
-                            <p class="mb-0 text-muted">{{ execution.test.description }}</p>
+                            <p>{{ execution.test.description }}</p>
                         </div>
                     </div>
                 </div>
@@ -22,8 +23,7 @@
                 <div class="card shadow-sm border-0 my-4">
                     <div class="card-header bg-white border-bottom-0">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h6 class="text-muted mb-0">Domanda {{ progress }}</h6>
-                            {#                            <h6 class="text-muted mb-0">Categoria: </h6>#}
+                            <h4 class="text-muted mb-0">Domanda {{ progress }}</h4>
                         </div>
                     </div>
 
@@ -101,7 +101,6 @@
 
         // Disabilita il submit del form se non è selezionata nessuna risposta
         document.getElementById('quiz-form').addEventListener('submit', function (event) {
-
             if (event.submitter.name === 'action' && event.submitter.value === 'next') {
                 const selectedAnswer = document.querySelector('input[name="answer"]:checked');
                 if (!selectedAnswer) {
@@ -109,9 +108,19 @@
                     alert('Per favore, seleziona una risposta prima di procedere.');
                 }
             }
+
+            // Salva la posizione dello scroll
+            localStorage.setItem('scrollPos', window.scrollY);
         });
 
+        // Ripristina la posizione dello scroll dopo il reload
+        window.addEventListener('load', function () {
+            const scrollPos = localStorage.getItem('scrollPos');
+            if (scrollPos !== null) {
+                window.scrollTo(0, parseInt(scrollPos));
+                localStorage.removeItem('scrollPos');
+            }
+        });
     </script>
-
 
 {% endblock %}
