@@ -20,11 +20,18 @@
         <ul class="list-group">
             {% for ga in given_answers %}
                 <li class="list-group-item">
-                    <p><strong>Domanda:</strong> {{ ga.answer.question.text }}</p>
+                    <p><strong>Domanda:</strong></p>
+                    <div class="richtext-content">
+                        {{ ga.answer.question.text|safe }}
+                    </div>
+
                     <p><strong>Risposta data:</strong> {{ ga.answer.text }}</p>
-                    
+
                     {% if ga.answer.score < 0.5 %}
-                        <p><strong>Commento:</strong> {{ ga.answer.correction }}</p>
+                        <p><strong>Commento:</strong></p>
+                        <div class="richtext-content">
+                            {{ ga.answer.correction|safe }}
+                        </div>
                     {% endif %}
                 </li>
             {% endfor %}
@@ -42,10 +49,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         function saveAsPDF() {
-            const { jsPDF } = window.jspdf;
+            const {jsPDF} = window.jspdf;
             const element = document.getElementById('risposte-pdf');
 
-            html2canvas(element, { scale: 2 }).then(canvas => {
+            html2canvas(element, {scale: 2}).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 const pdfWidth = pdf.internal.pageSize.getWidth();

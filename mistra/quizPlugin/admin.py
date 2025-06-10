@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from .forms import *
 from django.utils.html import format_html
 
 admin.site.register(GivenAnswer)
@@ -75,13 +76,17 @@ class SexAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
 
+
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
+    form = QuestionAdminForm
+
     list_display = ('name', 'category', 'text_preview')
     list_filter = ('category',)
     search_fields = ('name', 'text', 'category__name')
@@ -107,6 +112,8 @@ class TestAdmin(admin.ModelAdmin):
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
+    form = AnswerAdminForm
+
     list_display = ('text_preview', 'question_name', 'score', 'correction_preview')
     list_filter = ('score', 'question__category')
     search_fields = ('text', 'question__name', 'correction')

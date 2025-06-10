@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from ckeditor.fields import RichTextField
 import random
 import string
 
@@ -17,7 +18,7 @@ class Category(models.Model):
 
 class Question(models.Model):
     name = models.CharField(max_length=255)
-    text = models.TextField()
+    text = RichTextField(verbose_name="Testo della domanda")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='questions')
     
     class Meta:
@@ -33,7 +34,7 @@ class Answer(models.Model):
 
     score = models.FloatField()
     
-    correction = models.TextField()
+    correction = RichTextField(verbose_name="Correzione della risposta", blank=True, null=True)
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
     
     class Meta:

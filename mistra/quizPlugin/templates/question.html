@@ -28,11 +28,14 @@
                     </div>
 
                     <div class="card-body">
-                        <h5 class="fw-semibold mb-2">{{ question.text }}</h5>
+                        <div class="richtext-content">
+                            <div class="fw-semibold mb-3 heading h3">{{ question.text|safe }}</div>
+                        </div>
 
                         <span class="badge bg-secondary mb-3">{{ question.category.name }}</span>
 
-                        <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}" id="quiz-form">
+                        <form method="post" action="{% url 'quiz-submit' test_id=question.tests.first.id %}"
+                              id="quiz-form">
                             {% csrf_token %}
 
                             <div class="row row-cols-1 g-3 mb-4">
@@ -54,7 +57,8 @@
                                     <i class="fa fa-arrow-left me-2"></i>
                                     Indietro
                                 </button>
-                                <button type="submit" name="action" value="next" class="btn btn-primary px-4">Salva risposta e prosegui
+                                <button type="submit" name="action" value="next" class="btn btn-primary px-4">Salva
+                                    risposta e prosegui
                                     <i class="fa fa-arrow-right ms-2"></i>
                                 </button>
                             </div>
