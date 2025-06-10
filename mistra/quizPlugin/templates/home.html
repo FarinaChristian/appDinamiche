@@ -110,6 +110,7 @@
                     btn.style.color = '';
                     btn.style.cursor = '';
                     btn.style.opacity = '';
+                    btn.style.border = ''; // Resetta il bordo a quello di default
                 } else {
                     btn.classList.add('disabled');
                     btn.setAttribute('disabled', 'true');
@@ -119,6 +120,7 @@
                     btn.style.color = '#212121';
                     btn.style.cursor = 'not-allowed';
                     btn.style.opacity = '1';
+                    btn.style.border = '2px solid #c8c8c8'; // Cambia qui il colore del bordo
                 }
             });
         }
@@ -137,5 +139,8 @@
                 form.querySelector('input[name="age"]').value = ageValue;
             });
         });
+
+        validateForm();
     </script>
+
 {% endblock %}

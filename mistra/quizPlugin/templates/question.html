@@ -95,6 +95,10 @@
 
     <script>
         function jumpToQuestion(index) {
+            // Salva la posizione dello scroll prima dell'invio
+            localStorage.setItem('scrollPos', window.scrollY);
+
+            // Imposta il valore del campo nascosto e invia il form
             document.getElementById('jump_to').value = index;
             document.getElementById('jumpForm').submit();
         }
@@ -106,6 +110,7 @@
                 if (!selectedAnswer) {
                     event.preventDefault();
                     alert('Per favore, seleziona una risposta prima di procedere.');
+                    return;
                 }
             }
 
