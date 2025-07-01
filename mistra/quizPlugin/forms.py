@@ -1,10 +1,10 @@
 from django import forms
-from ckeditor.widgets import CKEditorWidget
+from django_ckeditor_5.widgets import CKEditor5Widget
 from .models import Question, Answer
 
 
 class QuestionAdminForm(forms.ModelForm):
-    text = forms.CharField(widget=CKEditorWidget())
+    text = forms.CharField(widget=CKEditor5Widget())
 
     class Meta:
         model = Question
@@ -12,7 +12,7 @@ class QuestionAdminForm(forms.ModelForm):
 
 
 class AnswerAdminForm(forms.ModelForm):
-    correction = forms.CharField(widget=CKEditorWidget(), required=False)
+    correction = forms.CharField(widget=CKEditor5Widget(), required=False)
 
     class Meta:
         model = Answer

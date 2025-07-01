@@ -22,6 +22,7 @@ from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
 urlpatterns = i18n_patterns(
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     path('admin/', admin.site.urls),
     path('filer/', include('filer.urls')),
