@@ -19,7 +19,7 @@
                         Hai già un test in corso. Vuoi riprendere da dove avevi lasciato o iniziare un nuovo test?
                     </div>
                     <div class="modal-footer">
-                        <a href="{% url 'quiz-question' request.session.execution_test_id %}" class="btn btn-primary">Riprendi</a>
+                        <a href="{% url 'quiz-question' %}" class="btn btn-primary">Riprendi</a>
                         <form method="post" action="{% url 'quiz-home' %}">
                             {% csrf_token %}
                             <input type="hidden" name="reset_session" value="1">
