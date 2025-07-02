@@ -51,7 +51,7 @@
     </div>
 
     {% if test %}
-        <form method="post" action="{% url 'quiz-question' test.id %}" class="start-test-form">
+        <form method="post" action="{% url 'quiz-start' test_id=test.id %}" class="start-test-form">
             {% csrf_token %}
             <input type="hidden" name="sex">
             <input type="hidden" name="age">
@@ -69,8 +69,7 @@
                         disabled 
                         aria-disabled="true" 
                         aria-label="Il pulsante Inizia il Test è disabilitato"
-                        style="background-color: #c8c8c8 !important; color: #212121 !important; cursor: not-allowed; opacity: 1 !important;"
-                    >
+                        style="background-color: #c8c8c8 !important; color: #212121 !important; cursor: not-allowed; opacity: 1 !important;">
                         Inizia il Test
                     </button>
                 </div>

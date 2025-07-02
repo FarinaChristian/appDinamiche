@@ -7,16 +7,23 @@ import random
 
 
 def home(request):
+    """
+    Visualizza la pagina principale del quiz.
+    Gestisce il reset della sessione se il pulsante "Inizia nuovo" viene premuto.
+    """
     if request.method == 'POST' and request.POST.get('reset_session') == '1':
+        # Reset della sessione -> pulsante "Inizia nuovo"
         for key in ['execution_id', 'question_index', 'start_time', 'execution_test_id']:
             request.session.pop(key, None)
         return redirect('quiz-home')
 
     tests_count = Test.objects.count()
-    test = Test.objects.all()[random.randint(0, tests_count - 1)] if tests_count > 0 else None
+
+    # Scelgo un test casuale
+    test = Test.objects.order_by('?').first() if tests_count > 0 else None
+
     sex = Sex.objects.all()
     has_ongoing_execution = 'execution_id' in request.session
-
     context = {
         'test': test,
         'sex': sex,
@@ -26,19 +33,47 @@ def home(request):
     return render(request, 'home.html', context)
 
 
-def start_test(request, test_id):
+def initiate_test(request, test_id):
+    """
+    Inizializza un test specifico e salva l'ID del test nella sessione.
+    Se il metodo della richiesta non è POST, reindirizza alla home.
+    """
+    if request.method == 'POST':
+        # Salva l'ID del test nella sessione
+        request.session['execution_test_id'] = test_id
+
+        # Salva l'età e il sesso nella sessione
+        age = request.POST.get('age')
+        sex = request.POST.get('sex')
+
+        request.session['age'] = age
+        request.session['sex'] = sex
+
+        return redirect('quiz-question')
+    return redirect('quiz-home')
+
+
+def start_test(request):
+    """
+    Avvia l'esecuzione del test, gestendo le domande e le risposte.
+    Se non esiste un test in esecuzione, reindirizza alla home.
+    """
+
+    test_id = request.session.get('execution_test_id')
+    if not test_id:
+        # Se non esiste un test in esecuzione, redireziona alla home
+        return redirect('quiz-home')
+
     # Recupera il test e le domande associate
     test = get_object_or_404(Test, id=test_id)
 
-    question_list = list(test.questions.all())
-    total_questions = len(question_list)
-
-    request.session['execution_test_id'] = test.id
+    question_list = list(test.questions.all())      # lista domande associate al test
+    total_questions = len(question_list)            # numero totale di domande
 
     if 'execution_id' not in request.session:
         # Se non esiste un'esecuzione del test nella sessione, creane una nuova
-        age = request.POST.get('age')
-        sex = request.POST.get('sex')
+        age = request.session.get('age')
+        sex = request.session.get('sex')
 
         execution = TestExecution.objects.create(
             age=age,
@@ -68,14 +103,14 @@ def start_test(request, test_id):
         if unanswered_questions:
             first_unanswered_index = question_list.index(unanswered_questions[0])
             request.session['question_index'] = first_unanswered_index
-            return redirect('quiz-question', test_id=test_id)
+            return redirect('quiz-question')
 
         score = sum([ga.answer.score for ga in execution.given_answers_through.all()])
         execution.score = round(score, 1)
         execution.duration = timezone.now() - timezone.datetime.fromisoformat(request.session['start_time'])
         execution.save()
 
-        for k in ['execution_id', 'question_index', 'start_time']:
+        for k in ['execution_id', 'question_index', 'start_time', 'execution_test_id']:
             request.session.pop(k, None)
 
         return redirect('quiz-completed', revision_code=execution.revision_code)
@@ -103,6 +138,9 @@ def start_test(request, test_id):
 
 
 def test_completed_view(request, revision_code):
+    """
+    Visualizza la pagina di completamento del test.
+    """
     execution = get_object_or_404(TestExecution, revision_code=revision_code)
     given_answers = execution.given_answers_through.select_related('answer__question')
 
@@ -114,19 +152,27 @@ def test_completed_view(request, revision_code):
     return render(request, 'test_completed.html', context)
 
 
-def submit_answer(request, test_id):
+def submit_answer(request):
+    """
+    Gestisce l'invio delle risposte del quiz.
+    Permette di navigare tra le domande e di rispondere.
+    """
     if request.method == 'POST':
-        execution = get_object_or_404(TestExecution, id=request.session.get('execution_id'))
-        action = request.POST.get('action')
+        execution_id = request.session.get('execution_id')
+        if not execution_id:
+            return redirect('quiz-home')
 
+        execution = get_object_or_404(TestExecution, id=execution_id)
+
+        action = request.POST.get('action')
         jump_to = request.POST.get('jump_to')
 
         if jump_to and jump_to.isdigit():
             request.session['question_index'] = int(jump_to)
-        elif action == 'back':
+        elif action == 'back':  # indietro
             if request.session['question_index'] > 0:
                 request.session['question_index'] -= 1
-        else:  # avanti
+        elif action == 'next':  # avanti
             answer_id = request.POST.get('answer')
             if answer_id:
                 answer = get_object_or_404(Answer, id=answer_id)
@@ -138,4 +184,4 @@ def submit_answer(request, test_id):
                 )
                 request.session['question_index'] += 1
 
-        return redirect('quiz-question', test_id=test_id)
+        return redirect('quiz-question')
